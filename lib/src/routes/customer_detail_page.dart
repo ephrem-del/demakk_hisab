@@ -25,7 +25,7 @@ class CustomerDetailPage extends StatelessWidget {
       length: 3,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () => launch('tel:+${customer.phoneNo}'),
+          onPressed: () => launch('tel:${customer.phoneNo}'),
           child: Icon(Icons.call),
         ),
         appBar: AppBar(
