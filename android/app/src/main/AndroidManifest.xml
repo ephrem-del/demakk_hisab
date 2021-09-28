@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.demakk_hisab">
+    package="com.demakk.demakk_hisab">
    <application
         android:label="demakk_hisab"
         android:icon="@mipmap/ic_launcher">
