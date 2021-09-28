@@ -5,6 +5,7 @@ import 'package:demakk_hisab/src/view_models/customers_weekly_orders_view_model.
 import 'package:demakk_hisab/src/view_models/order_view_model.dart';
 import 'package:demakk_hisab/src/widgets/order_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'add_order_page.dart';
 
@@ -23,6 +24,10 @@ class CustomerDetailPage extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => launch('tel:+${customer.phoneNo}'),
+          child: Icon(Icons.call),
+        ),
         appBar: AppBar(
           centerTitle: true,
           title: Text(customer.customerName),
