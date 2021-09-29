@@ -16,7 +16,11 @@ class Customer {
       this.id = ''});
 
   Map<String, dynamic> toMap() {
-    return {'name': name, 'phoneNo': phoneNo, 'paymentLeft': totalNotPaid};
+    return {
+      'name': name,
+      'phoneNo': phoneNo,
+      'paymentLeft': totalNotPaid,
+    };
   }
 
   factory Customer.fromSnapshot(QueryDocumentSnapshot doc) {

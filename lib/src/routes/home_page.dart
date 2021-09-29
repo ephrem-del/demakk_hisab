@@ -1,3 +1,4 @@
+import 'package:demakk_hisab/src/routes/contacts_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -52,12 +53,12 @@ class _HomePageState extends State<HomePage>
                 sliver: SliverAppBar(
                   leading: !_isSignedIn
                       ? IconButton(
-                    icon: Icon(Icons.settings),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => LoginPage()));
-                    },
-                  )
+                          icon: Icon(Icons.settings),
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => LoginPage()));
+                          },
+                        )
                       : const SizedBox.shrink(),
                   automaticallyImplyLeading: false,
                   expandedHeight: 150,
@@ -104,6 +105,19 @@ class _HomePageState extends State<HomePage>
                       ),
                     ],
                   ),
+                  actions: [
+                    IconButton(
+                      icon: Icon(Icons.supervisor_account_outlined),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ContactsPage(),
+                          ),
+                        );
+                      },
+                    )
+                  ],
                 ),
               )
             ];
