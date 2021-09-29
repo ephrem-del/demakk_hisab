@@ -38,10 +38,10 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
             return Text('Error: ${snapshot.error}');
           }
           switch (snapshot.connectionState) {
-            // case ConnectionState.waiting:
-            //   return const Center(
-            //     child: Text('Loading . . .'),
-            //   );
+            case ConnectionState.waiting:
+              return const Center(
+                child: Text('Loading . . .'),
+              );
             default:
               if (!snapshot.hasData) {
                 return const Center(
@@ -85,9 +85,17 @@ class ExpenseTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _ExpenseListTile(title: 'ርዕስ: ', content: expense.title),
-            _ExpenseListTile(title: 'የብር መጠን: ', content: expense.amount),
-            _ExpenseListTile(title: 'የወጪ ዝርዝር: ', content: expense.description),
+            _ExpenseListTile(title: 'Title: ', content: expense.title),
+            expense.withVat
+                ? _ExpenseListTile(title: 'Price', content: expense.withoutVat)
+                : const SizedBox.shrink(),
+            expense.withVat
+                ? _ExpenseListTile(title: 'VAT', content: expense.vat)
+                : const SizedBox.shrink(),
+            _ExpenseListTile(
+                title: 'Total Price: ', content: expense.totalAmount),
+            _ExpenseListTile(
+                title: 'Description: ', content: expense.description),
             _ExpenseListTile(title: '', content: expense.dateAdded)
           ],
         ),

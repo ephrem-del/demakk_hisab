@@ -1,6 +1,7 @@
 import 'package:demakk_hisab/src/routes/add_contact_page.dart';
 import 'package:demakk_hisab/src/view_models/contacts_view_model.dart';
 import 'package:demakk_hisab/src/view_models/customer_view_model.dart';
+import 'package:demakk_hisab/src/view_models/supplier_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -94,10 +95,37 @@ class _Suppliers extends StatefulWidget {
 }
 
 class __SuppliersState extends State<_Suppliers> {
+  late ContactsViewModel _contactsViewModel;
+
+  void initState() {
+    _contactsViewModel = ContactsViewModel();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Suppliers'),
+    return StreamBuilder<List<SupplierViewModel>>(
+      stream: _contactsViewModel.suppliersStream.stream,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('error: ${snapshot.error}');
+        }
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Text('Loading . . .');
+          default:
+            if (!snapshot.hasData) {
+              return Text('No data');
+            }
+        }
+        final List<SupplierViewModel> _suppliers = snapshot.data!;
+        return ListView.builder(
+            itemCount: _suppliers.length,
+            itemBuilder: (context, index) {
+              final supplier = _suppliers[index];
+              return ContactSupplierTile(supplier: supplier);
+            });
+      },
     );
   }
 }
@@ -113,6 +141,35 @@ class ContactTile extends StatelessWidget {
       subtitle: Text(customer.phoneNo),
       trailing: IconButton(
         onPressed: () => launch('tel:${customer.phoneNo}'),
+        icon: Icon(Icons.call),
+      ),
+    );
+  }
+}
+
+class ContactSupplierTile extends StatelessWidget {
+  final SupplierViewModel supplier;
+  const ContactSupplierTile({required this.supplier, Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      isThreeLine: true,
+      title: Text(supplier.supplierName),
+      subtitle: Align(
+        alignment: Alignment.topLeft,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(supplier.supplierPhoneNumber),
+            Text(supplier.supplierComment)
+          ],
+        ),
+      ),
+      trailing: IconButton(
+        onPressed: () => launch('tel:${supplier.supplierPhoneNumber}'),
         icon: Icon(Icons.call),
       ),
     );

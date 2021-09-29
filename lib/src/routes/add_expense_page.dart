@@ -16,6 +16,8 @@ class _AddExpensePageState extends State<AddExpensePage> {
 
   final TextEditingController amountController = TextEditingController();
 
+  bool withVat = true;
+
   final _formKey = GlobalKey<FormState>();
 
   final AddExpenseViewModel _addExpenseVM = AddExpenseViewModel();
@@ -25,8 +27,9 @@ class _AddExpensePageState extends State<AddExpensePage> {
     final _title = titleController.text;
     final _description = descriptionController.text;
     final _amount = amountController.text;
+    final _withVat = withVat;
     if (_formKey.currentState!.validate()) {
-      await _addExpenseVM.addExpense(_title, _description, _amount);
+      await _addExpenseVM.addExpense(_title, _description, _amount, _withVat);
       //if (isAdded) {
       Navigator.pop(context);
       //}
@@ -50,14 +53,14 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 controller: titleController,
                 validator: (value) {
                   if (value == null) {
-                    return 'ርዕስ አስገባ';
+                    return 'Title required';
                   } else if (value.isEmpty) {
-                    return 'ርዕስ አስገባ';
+                    return 'Title required';
                   }
                 },
                 decoration: const InputDecoration(
-                  hintText: 'የወጪ ርዕስ',
-                  label: Text('ርዕስ'),
+                  hintText: 'Expense Title',
+                  label: Text('Title'),
                 ),
               ),
               TextFormField(
@@ -67,14 +70,14 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 //expands: true,
                 validator: (value) {
                   if (value == null) {
-                    return 'የወጪ ዝርዝር አስገባ';
+                    return 'Description required';
                   } else if (value.isEmpty) {
-                    return 'የወጪ ዝርዝር አስገባ';
+                    return 'Description required';
                   }
                 },
                 decoration: const InputDecoration(
-                  hintText: 'የወጪ ዝርዝር',
-                  label: Text('ዝርዝር'),
+                  hintText: 'Expense description',
+                  label: Text('Description'),
                 ),
               ),
               TextFormField(
@@ -82,22 +85,30 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 controller: amountController,
                 validator: (value) {
                   if (value == null) {
-                    return 'የብር መጠን አስገባ';
+                    return 'Amount required';
                   } else if (value.isEmpty) {
-                    return 'የብር መጠን አስገባ';
+                    return 'Amount required';
                   }
                 },
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
-                  hintText: 'የብር መጠን',
-                  label: Text('የብር መጠን'),
+                  hintText: 'Amount',
+                  label: Text('Amount'),
                 ),
               ),
+              CheckboxListTile(
+                  title: Text('With VAT?'),
+                  value: withVat,
+                  onChanged: (value) {
+                    setState(() {
+                      withVat = value ?? false;
+                    });
+                  }),
               ElevatedButton(
                 onPressed: () {
                   _addExpense(context);
                 },
-                child: Text('ወጪ መዝግብ'),
+                child: Text('Add Expense'),
               )
             ],
           ),

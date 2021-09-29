@@ -106,7 +106,7 @@ class CustomerTile extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          "ቀሪ ክፍያ:  ${customer.paymentLeft}",
+                          "Payment Left:  ${customer.paymentLeft}",
                           //overflow: TextOverflow.fade,
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w500),
@@ -120,7 +120,7 @@ class CustomerTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      'ስልክ ቁጥር: ',
+                      'Phone no: ',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,

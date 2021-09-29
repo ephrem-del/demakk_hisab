@@ -33,7 +33,7 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('አዲስ ደንበኛ'),
+        title: const Text('New Customer'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -44,40 +44,40 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
               TextFormField(
                 validator: (value) {
                   if (value == null) {
-                    return 'የደንበኛ ስም አስገባ';
+                    return 'Customer name is required';
                   }
                   if (value.isEmpty) {
-                    return 'የደንበኛ ስም አስገባ';
+                    return 'Customer name is required';
                   }
                 },
                 controller: _nameController,
                 decoration: const InputDecoration(
-                  hintText: 'የደንበኛ ስም',
-                  label: Text('የደንበኛ ስም'),
+                  hintText: 'Customer Name',
+                  label: Text('Customer Name'),
                 ),
               ),
               TextFormField(
                 validator: (value) {
                   if (value == null) {
-                    return 'የደንበኛ ስልክ ቁጥር አስገባ';
+                    return 'Customer Number is required';
                   }
                   if (value.isEmpty) {
-                    return 'የደንበኛ ስልክ ቁጥር አስገባ';
+                    return 'Customer Number is required';
                   }
                 },
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 controller: _phoneNoController,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
-                  hintText: 'የደንበኛ ስልክ ቁጥር',
-                  label: Text('ስልክ ቁጥር'),
+                  hintText: 'Customer Phone Number',
+                  label: Text('Phone Number'),
                 ),
               ),
               ElevatedButton(
                 onPressed: () {
                   _addCustomer(context);
                 },
-                child: const Text('አዲስ ደንበኛ ጨምር'),
+                child: const Text('Add New Customer'),
               )
             ],
           ),

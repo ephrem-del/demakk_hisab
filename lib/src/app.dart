@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 // import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'sample_feature/sample_item_details_view.dart';
-import 'sample_feature/sample_item_list_view.dart';
 import 'settings/settings_controller.dart';
-import 'settings/settings_view.dart';
+// import 'settings/settings_view.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -68,7 +66,7 @@ class MyApp extends StatelessWidget {
                   // Define a light and dark color theme. Then, read the user's
                   // preferred ThemeMode (light, dark, or system default) from the
                   // SettingsController to display the correct theme.
-                  theme: ThemeData(primarySwatch: Colors.deepOrange),
+                  theme: ThemeData(primarySwatch: Colors.teal),
                   darkTheme: ThemeData.dark(),
                   themeMode: settingsController.themeMode,
 

@@ -17,8 +17,31 @@ class ExpenseViewModel {
     return expense.description;
   }
 
-  String get amount {
+  String get totalAmount {
     return expense.amount;
+  }
+
+  String get withoutVat {
+    if (expense.withVat == true) {
+      final _total = int.parse(expense.amount);
+      final _withoutVat = _total / 1.15;
+      return _withoutVat.toStringAsFixed(2);
+    }
+    return expense.amount;
+  }
+
+  String get vat {
+    if (expense.withVat == true) {
+      final _total = int.parse(expense.amount);
+      final _withoutVat = _total / 1.15;
+      final _vat = _total - _withoutVat;
+      return _vat.toStringAsFixed(2);
+    }
+    return '';
+  }
+
+  bool get withVat {
+    return expense.withVat;
   }
 
   String get dateAdded {

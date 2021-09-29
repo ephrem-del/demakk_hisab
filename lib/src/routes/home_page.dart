@@ -18,8 +18,8 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 //  int _currentIndex = 0;
-  final List _titles = ['አዳዲሰ ትእዛዞች', 'ደንበኞች', 'ወጪ'];
-  String title = 'አዳዲስ';
+  final List _titles = ['Today\'s Orders', 'Customers', 'Expense'];
+  String title = 'Todays\'s';
   bool _isSignedIn = false;
   @override
   void initState() {
@@ -95,13 +95,13 @@ class _HomePageState extends State<HomePage>
                     controller: _tabController,
                     tabs: const [
                       Tab(
-                        text: 'አዳዲስ',
+                        text: 'Today\'s',
                       ),
                       Tab(
-                        text: 'ደንበኞች',
+                        text: 'Customers',
                       ),
                       Tab(
-                        text: 'ወጪ',
+                        text: 'Expense',
                       ),
                     ],
                   ),

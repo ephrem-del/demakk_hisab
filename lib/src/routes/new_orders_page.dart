@@ -33,7 +33,7 @@ class _NewOrdersPageState extends State<NewOrdersPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'ጠቅላላ የዛሬ ገቢ',
+                    'Total Today',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -43,19 +43,19 @@ class _NewOrdersPageState extends State<NewOrdersPage> {
                     stream: _newOrdersVM.totalTodayStream.stream,
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
-                        return Text('0 ብር');
+                        return Text('0 \$\$');
                       }
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return Text('0 ብር');
+                          return Text('0 \$\$');
                         default:
                           if (!snapshot.hasData) {
-                            return Text('0 ብር');
+                            return Text('0 \$\$');
                           }
                       }
                       final totalToday = snapshot.data!;
                       return Text(
-                        '$totalToday ብር',
+                        '$totalToday \$\$',
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,

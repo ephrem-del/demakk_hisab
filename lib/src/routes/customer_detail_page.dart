@@ -40,13 +40,13 @@ class CustomerDetailPage extends StatelessWidget {
               ),
               tabs: [
                 Tab(
-                  text: 'ዛሬ',
+                  text: 'Today\'s',
                 ),
                 Tab(
-                  text: 'ሳምንታዊ',
+                  text: 'Weekly',
                 ),
                 Tab(
-                  text: 'ጠቅላላ',
+                  text: 'All',
                 ),
               ],
             ),

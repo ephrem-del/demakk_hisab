@@ -27,10 +27,10 @@ class SplashScreen extends StatelessWidget {
             SizedBox(
               height: 200,
               width: 200,
-              child: Image.asset('assets/images/logo.png'),
+              child: Image.asset('assets/images/demakk_logo.png'),
             ),
             const SizedBox(
-              height: 20,
+              height: 80,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -71,31 +71,6 @@ class SplashScreen extends StatelessWidget {
             ),
             const SizedBox(
               height: 100,
-            ),
-            Column(
-              children: const [
-                Text(
-                  'Contact Us',
-                  style: TextStyle(fontSize: 20),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  '0922493805',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  'www.demakk.com',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 3),
-                )
-              ],
             ),
           ],
         ),

@@ -74,7 +74,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               repeatForever: true,
               animatedTexts: [
                 ColorizeAnimatedText(
-                  'ሂሳብ መያዣ',
+                  'DEMAKK HISAB',
                   speed: const Duration(seconds: 1),
                   textStyle: const TextStyle(
                     fontSize: 50,
@@ -95,7 +95,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             ),
             const SizedBox(height: 40),
             const SizedBox(height: 10),
-            Text('$_trialsLeft ሙከራ ይቀራል'),
+            Text('$_trialsLeft trials left'),
             const SizedBox(
               height: 20,
             ),
@@ -108,9 +108,9 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   const Expanded(
                     flex: 1,
                     child: Text(
-                      'ስም',
+                      'Name',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                       ),
                     ),
                   ),
@@ -119,7 +119,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: SizedBox(
-                        width: 150,
+                        width: 100,
                         child: TextFormField(
                           textAlign: TextAlign.center,
                           controller: _nameController,
@@ -138,14 +138,14 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'የይለፍ ቃል',
+                    'Password',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                     ),
                   ),
                   const SizedBox(width: 20),
                   SizedBox(
-                    width: 150,
+                    width: 100,
                     child: TextFormField(
                       textAlign: TextAlign.center,
                       controller: _pinController,
@@ -161,7 +161,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               onPressed: () {
                 authenticate(context);
               },
-              child: const Text('ግባ'),
+              child: const Text('Login'),
             ),
             const SizedBox(
               height: 100,

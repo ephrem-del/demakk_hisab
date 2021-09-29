@@ -28,7 +28,6 @@ class _AddOrderPageState extends State<AddOrderPage> {
       final ordAmount = int.parse(newAmountController.text);
       final double pps = double.parse(newPricePerSingleController.text);
       final paidAmount = int.parse(newPaymentController.text);
-      final dateTime = DateTime.now();
       await _addOrderViewModel.addOrder(
           name, orderType, ordAmount, pps, paidAmount, widget.customer.id!);
       //if (isAdded) {
@@ -43,7 +42,8 @@ class _AddOrderPageState extends State<AddOrderPage> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Theme.of(context).primaryColor,
-        title: const Text('ትዕዛዝ ማስገቢያ'),
+        title: const Text('Add Order'),
+        centerTitle: true,
       ),
       //backgroundColor: Colors.white12,
       body: Center(
@@ -59,7 +59,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
                 child: Column(
                   children: [
                     const Text(
-                      'ትዕዛዝ ማስገቢያ',
+                      'Add Order',
                       style: TextStyle(fontSize: 30),
                     ),
                     const SizedBox(
@@ -107,7 +107,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text('አይነት:',
+          const Text('Type:',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
           Opacity(
             opacity: 0.8,
@@ -122,13 +122,13 @@ class _AddOrderPageState extends State<AddOrderPage> {
                     controller: newTypeController,
                     validator: (value) {
                       if (value == null) {
-                        return 'አይነት አስገባ';
+                        return 'Type is required';
                       }
                       if (value.isEmpty) {
-                        return 'አይነት አስገባ';
+                        return 'Type is required';
                       }
                     },
-                    decoration: const InputDecoration(hintText: 'የትዕዛዝ አይነት'),
+                    decoration: const InputDecoration(hintText: 'Order Type'),
                   ),
                 ),
               ),
@@ -146,7 +146,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text(
-            'ብዛት:',
+            'Amount:',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
           Opacity(
@@ -164,13 +164,13 @@ class _AddOrderPageState extends State<AddOrderPage> {
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null) {
-                        return 'ብዛት አስገባ';
+                        return 'Amount is required';
                       }
                       if (value.isEmpty) {
-                        return 'ብዛት አስገባ';
+                        return 'Amount is required';
                       }
                     },
-                    decoration: const InputDecoration(hintText: 'ብዛት'),
+                    decoration: const InputDecoration(hintText: 'Amount'),
                   ),
                 ),
               ),
@@ -188,7 +188,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text(
-            'የአንዱ ዋጋ:',
+            'PPS:',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
           Opacity(
@@ -206,14 +206,14 @@ class _AddOrderPageState extends State<AddOrderPage> {
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null) {
-                        return 'የአንዱ ዋጋ አስገባ';
+                        return 'Price per single is required';
                       }
                       if (value.isEmpty) {
-                        return 'የአንዱ ዋጋ አስገባ';
+                        return 'Price per single is required';
                       }
                     },
                     decoration: const InputDecoration(
-                      hintText: 'የአንዱ ዋጋ',
+                      hintText: 'Price per single',
                     ),
                   ),
                 ),
@@ -232,7 +232,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text(
-            'የተከፈለ:',
+            'Paid:',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
           Opacity(
@@ -250,13 +250,13 @@ class _AddOrderPageState extends State<AddOrderPage> {
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null) {
-                        return 'የተከፈለ ብር አስገባ';
+                        return 'Paid amount is required';
                       }
                       if (value.isEmpty) {
-                        return 'የተከፈለ ብር አስገባ';
+                        return 'Paid amount is required';
                       }
                     },
-                    decoration: const InputDecoration(hintText: 'የተከፈለ ብር'),
+                    decoration: const InputDecoration(hintText: 'Paid amount'),
                   ),
                 ),
               ),
@@ -273,7 +273,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
         _addOrder(context);
       },
       child: const Text(
-        'ትዕዛዝ ጨምር',
+        'Add Order',
         style: TextStyle(color: Colors.black),
       ),
       style: ButtonStyle(
