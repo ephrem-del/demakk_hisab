@@ -172,7 +172,9 @@ class CustomerTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      customer.customerName,
+                      customer.customerName.replaceFirst(
+                          customer.customerName[0],
+                          customer.customerName[0].toUpperCase()),
                       style: const TextStyle(
                           fontSize: 22, fontWeight: FontWeight.w600),
                     ),
