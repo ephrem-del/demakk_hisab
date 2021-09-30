@@ -53,6 +53,12 @@ class _Customers extends StatefulWidget {
 class __CustomersState extends State<_Customers> {
   late ContactsViewModel _contactsViewModel;
 
+  final TextEditingController _customerSearchController =
+      TextEditingController();
+
+  List<CustomerViewModel> customersForSearch = [];
+  List<CustomerViewModel> customerSearchResult = [];
+
   @override
   void initState() {
     _contactsViewModel = ContactsViewModel();
@@ -76,14 +82,82 @@ class __CustomersState extends State<_Customers> {
             }
         }
         final List<CustomerViewModel> _customers = snapshot.data!;
-        return ListView.builder(
-            itemCount: _customers.length,
-            itemBuilder: (context, index) {
-              final _customer = _customers[index];
-              return ContactTile(customer: _customer);
-            });
+        customersForSearch = _customers;
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.teal,
+                    width: 3.0,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 2, 8, 0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.search),
+                              hintText: 'Search . . .',
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(10, 15, 10, 5),
+                              border: InputBorder.none),
+                          controller: _customerSearchController,
+                          onChanged: customerSearchOperation,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          _customerSearchController.clear();
+                          customerSearchResult.clear();
+                          setState(() {});
+                        },
+                        icon: Icon(Icons.clear),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Flexible(
+              child: customerSearchResult.length != 0 ||
+                      _customerSearchController.text.isNotEmpty
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: customerSearchResult.length,
+                      itemBuilder: (context, index) {
+                        CustomerViewModel _customerFromSearch =
+                            customerSearchResult[index];
+                        return ContactTile(customer: _customerFromSearch);
+                      },
+                    )
+                  : ListView.builder(
+                      itemCount: _customers.length,
+                      itemBuilder: (context, index) {
+                        final _customer = _customers[index];
+                        return ContactTile(customer: _customer);
+                      }),
+            ),
+          ],
+        );
       },
     );
+  }
+
+  void customerSearchOperation(String searchText) {
+    setState(() {});
+    customerSearchResult.clear();
+    for (int i = 0; i < customersForSearch.length; i++) {
+      CustomerViewModel data = customersForSearch[i];
+      if (data.customerName.toLowerCase().contains(searchText.toLowerCase())) {
+        customerSearchResult.add(data);
+      }
+    }
   }
 }
 
@@ -96,6 +170,12 @@ class _Suppliers extends StatefulWidget {
 
 class __SuppliersState extends State<_Suppliers> {
   late ContactsViewModel _contactsViewModel;
+
+  final TextEditingController _supplierSearchController =
+      TextEditingController();
+
+  List<SupplierViewModel> suppliersForSearch = [];
+  List<SupplierViewModel> supplierSearchResult = [];
 
   void initState() {
     _contactsViewModel = ContactsViewModel();
@@ -119,14 +199,83 @@ class __SuppliersState extends State<_Suppliers> {
             }
         }
         final List<SupplierViewModel> _suppliers = snapshot.data!;
-        return ListView.builder(
-            itemCount: _suppliers.length,
-            itemBuilder: (context, index) {
-              final supplier = _suppliers[index];
-              return ContactSupplierTile(supplier: supplier);
-            });
+        suppliersForSearch = _suppliers;
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.teal,
+                    width: 3.0,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 2, 8, 0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.search),
+                              hintText: 'Search . . .',
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(10, 15, 10, 5),
+                              border: InputBorder.none),
+                          controller: _supplierSearchController,
+                          onChanged: supplierSearchOperation,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          _supplierSearchController.clear();
+                          supplierSearchResult.clear();
+                          setState(() {});
+                        },
+                        icon: Icon(Icons.clear),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Flexible(
+              child: supplierSearchResult.length != 0 ||
+                      _supplierSearchController.text.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: supplierSearchResult.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        SupplierViewModel _supplierFromSearch =
+                            supplierSearchResult[index];
+                        return ContactSupplierTile(
+                            supplier: _supplierFromSearch);
+                      },
+                    )
+                  : ListView.builder(
+                      itemCount: _suppliers.length,
+                      itemBuilder: (context, index) {
+                        final supplier = _suppliers[index];
+                        return ContactSupplierTile(supplier: supplier);
+                      }),
+            ),
+          ],
+        );
       },
     );
+  }
+
+  void supplierSearchOperation(String searchText) {
+    setState(() {});
+    supplierSearchResult.clear();
+    for (int i = 0; i < suppliersForSearch.length; i++) {
+      SupplierViewModel data = suppliersForSearch[i];
+      if (data.supplierName.toLowerCase().contains(searchText.toLowerCase())) {
+        supplierSearchResult.add(data);
+      }
+    }
   }
 }
 
