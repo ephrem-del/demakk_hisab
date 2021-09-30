@@ -286,8 +286,23 @@ class ContactTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(customer.customerName),
-      subtitle: Text(customer.phoneNo),
+      title: Text(
+        customer.customerName.replaceFirst(
+          customer.customerName[0],
+          customer.customerName[0].toUpperCase(),
+        ),
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      subtitle: Text(
+        customer.phoneNo,
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
       trailing: IconButton(
         onPressed: () => launch('tel:${customer.phoneNo}'),
         icon: Icon(Icons.call),
@@ -305,15 +320,34 @@ class ContactSupplierTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       isThreeLine: true,
-      title: Text(supplier.supplierName),
+      title: Text(
+        supplier.supplierName.replaceFirst(
+            supplier.supplierName[0], supplier.supplierName[0].toUpperCase()),
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
       subtitle: Align(
         alignment: Alignment.topLeft,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(supplier.supplierPhoneNumber),
-            Text(supplier.supplierComment)
+            Text(
+              supplier.supplierPhoneNumber,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              supplier.supplierComment,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+              ),
+            )
           ],
         ),
       ),

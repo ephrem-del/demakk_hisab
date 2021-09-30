@@ -1,4 +1,3 @@
-
 import 'package:demakk_hisab/src/models/model.dart';
 import 'package:demakk_hisab/src/utils/time_converter.dart';
 
@@ -59,26 +58,26 @@ class OrderViewModel {
     if (order.orderDate.day == DateTime.now().day &&
         order.orderDate.month == DateTime.now().month &&
         order.orderDate.year == DateTime.now().year) {
-      return 'ዛሬ @ $converted : ${order.orderDate.minute}';
+      return 'Today @ $converted : ${order.orderDate.minute}';
     } else if (!(DateTime.now().difference(order.orderDate) >
         const Duration(days: 1))) {
-      return 'ትናንት $converted : ${order.orderDate.minute}';
+      return 'Yesterday $converted : ${order.orderDate.minute}';
     } else {
       switch (order.orderDate.weekday) {
         case 1:
-          return 'ሰኞ $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
+          return 'Monday $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
         case 2:
-          return 'ማክሰኞ $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
+          return 'Tuesday $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
         case 3:
-          return 'ረቡዕ $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
+          return 'Wednesday $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
         case 4:
-          return 'ሐሙስ $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
+          return 'Thursday $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
         case 5:
-          return 'አርብ $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
+          return 'Friday $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
         case 6:
-          return 'ቅዳሜ $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
+          return 'Saturday $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
         case 7:
-          return 'እሁድ $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
+          return 'Sunday $converted : ${order.orderDate.minute}  ${order.orderDate.toLocal().day}/${order.orderDate.toLocal().month}/${order.orderDate.toLocal().year}';
         default:
           return order.orderDate.toLocal().toString();
       }

@@ -42,7 +42,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Theme.of(context).primaryColor,
-        title: const Text('Add Order'),
+        title: const Text('New Order'),
         centerTitle: true,
       ),
       //backgroundColor: Colors.white12,
@@ -59,7 +59,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
                 child: Column(
                   children: [
                     const Text(
-                      'Add Order',
+                      'New Order',
                       style: TextStyle(fontSize: 30),
                     ),
                     const SizedBox(
@@ -128,6 +128,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
                         return 'Type is required';
                       }
                     },
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(hintText: 'Order Type'),
                   ),
                 ),
@@ -170,6 +171,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
                         return 'Amount is required';
                       }
                     },
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(hintText: 'Amount'),
                   ),
                 ),
@@ -212,6 +214,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
                         return 'Price per single is required';
                       }
                     },
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
                       hintText: 'Price per single',
                     ),
@@ -256,6 +259,7 @@ class _AddOrderPageState extends State<AddOrderPage> {
                         return 'Paid amount is required';
                       }
                     },
+                    textInputAction: TextInputAction.done,
                     decoration: const InputDecoration(hintText: 'Paid amount'),
                   ),
                 ),

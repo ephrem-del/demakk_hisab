@@ -62,6 +62,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   hintText: 'Expense Title',
                   label: Text('Title'),
                 ),
+                textInputAction: TextInputAction.next,
               ),
               TextFormField(
                 controller: descriptionController,
@@ -79,6 +80,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   hintText: 'Expense description',
                   label: Text('Description'),
                 ),
+                textInputAction: TextInputAction.next,
               ),
               TextFormField(
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -95,6 +97,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   hintText: 'Amount',
                   label: Text('Amount'),
                 ),
+                textInputAction: TextInputAction.done,
               ),
               CheckboxListTile(
                   title: Text('With VAT?'),

@@ -39,67 +39,65 @@ class _AddContactPageState extends State<AddContactPage> {
       ),
       body: Form(
         key: _formKey,
-        child: Column(
-          children: [
-            Row(
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Name'),
-                SizedBox(
-                  width: 200,
-                  child: TextFormField(
-                    controller: _nameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Name is required';
-                      }
-                    },
-                    keyboardType: TextInputType.name,
+                TextFormField(
+                  controller: _nameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Name is required';
+                    }
+                  },
+                  keyboardType: TextInputType.name,
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                    labelText: 'Name',
                   ),
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Phone no',
+                  ),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  controller: _phoneNumberController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Phone Number required';
+                    }
+                  },
+                  keyboardType: TextInputType.phone,
+                  textInputAction: TextInputAction.next,
+                ),
+                TextFormField(
+                  controller: _commentController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Comment is required';
+                    }
+                  },
+                  keyboardType: TextInputType.phone,
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    labelText: 'Comment',
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    _addContact(context);
+                  },
+                  child: Text('Add Contact'),
                 ),
               ],
             ),
-            Row(
-              children: [
-                const Text('Phone no:'),
-                SizedBox(
-                  width: 200,
-                  child: TextFormField(
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    controller: _phoneNumberController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Phone Number required';
-                      }
-                    },
-                    keyboardType: TextInputType.phone,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                const Text('Comment'),
-                SizedBox(
-                  width: 200,
-                  child: TextFormField(
-                    controller: _commentController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Comment is required';
-                      }
-                    },
-                    keyboardType: TextInputType.phone,
-                  ),
-                ),
-              ],
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _addContact(context);
-              },
-              child: Text('Add Contact'),
-            ),
-          ],
+          ),
         ),
       ),
     );

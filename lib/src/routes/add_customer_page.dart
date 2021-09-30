@@ -55,6 +55,7 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
                   hintText: 'Customer Name',
                   label: Text('Customer Name'),
                 ),
+                textInputAction: TextInputAction.next,
               ),
               TextFormField(
                 validator: (value) {
@@ -72,6 +73,7 @@ class _AddCustomerPageState extends State<AddCustomerPage> {
                   hintText: 'Customer Phone Number',
                   label: Text('Phone Number'),
                 ),
+                textInputAction: TextInputAction.done,
               ),
               ElevatedButton(
                 onPressed: () {
