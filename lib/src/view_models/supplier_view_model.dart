@@ -15,4 +15,8 @@ class SupplierViewModel {
   String get supplierComment {
     return supplier.comment;
   }
+
+  String get id {
+    return supplier.id!;
+  }
 }

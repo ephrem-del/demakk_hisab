@@ -1,4 +1,5 @@
 import 'package:demakk_hisab/src/routes/add_contact_page.dart';
+import 'package:demakk_hisab/src/routes/supplier_detail_page.dart';
 import 'package:demakk_hisab/src/view_models/contacts_view_model.dart';
 import 'package:demakk_hisab/src/view_models/customer_view_model.dart';
 import 'package:demakk_hisab/src/view_models/supplier_view_model.dart';
@@ -10,7 +11,7 @@ class ContactsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _pages = <Widget>[_Customers(), _Suppliers()];
+    List<Widget> _pages = <Widget>[const _Customers(), _Suppliers()];
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -320,6 +321,14 @@ class ContactSupplierTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       isThreeLine: true,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => SupplierDetailPage(supplier: supplier),
+          ),
+        );
+      },
       title: Text(
         supplier.supplierName.replaceFirst(
             supplier.supplierName[0], supplier.supplierName[0].toUpperCase()),
