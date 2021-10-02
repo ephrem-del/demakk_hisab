@@ -4,11 +4,13 @@ class Supplier {
   final String name;
   final String phoneNumber;
   final String comment;
+  final String location;
   final String? id;
   Supplier(
       {required this.name,
       required this.phoneNumber,
       required this.comment,
+      required this.location,
       this.id = ''});
 
   Map<String, dynamic> toMap() {
@@ -16,6 +18,7 @@ class Supplier {
       'name': name,
       'phoneNumber': phoneNumber,
       'comment': comment,
+      'location': location,
     };
   }
 
@@ -24,6 +27,7 @@ class Supplier {
         name: doc['name'],
         phoneNumber: doc['phoneNumber'],
         comment: doc['comment'],
+        location: doc['location'],
         id: doc.id);
   }
 }

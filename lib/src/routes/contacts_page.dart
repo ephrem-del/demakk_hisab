@@ -87,7 +87,7 @@ class __CustomersState extends State<_Customers> {
         return Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 15),
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -97,7 +97,7 @@ class __CustomersState extends State<_Customers> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 2, 8, 0),
+                  padding: const EdgeInsets.fromLTRB(8, 2, 8, 8),
                   child: Row(
                     children: [
                       Expanded(
@@ -178,6 +178,7 @@ class __SuppliersState extends State<_Suppliers> {
   List<SupplierViewModel> suppliersForSearch = [];
   List<SupplierViewModel> supplierSearchResult = [];
 
+  @override
   void initState() {
     _contactsViewModel = ContactsViewModel();
     super.initState();
@@ -204,7 +205,7 @@ class __SuppliersState extends State<_Suppliers> {
         return Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -319,8 +320,7 @@ class ContactSupplierTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      isThreeLine: true,
+    return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
@@ -329,40 +329,58 @@ class ContactSupplierTile extends StatelessWidget {
           ),
         );
       },
-      title: Text(
-        supplier.supplierName.replaceFirst(
-            supplier.supplierName[0], supplier.supplierName[0].toUpperCase()),
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      subtitle: Align(
-        alignment: Alignment.topLeft,
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(10, 8, 10, 0),
+        padding: const EdgeInsets.fromLTRB(10, 5, 5, 10),
+        decoration: BoxDecoration(
+            border: Border.all(), borderRadius: BorderRadius.circular(20)),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              supplier.supplierPhoneNumber,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      supplier.supplierName.replaceFirst(
+                          supplier.supplierName[0],
+                          supplier.supplierName[0].toUpperCase()),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      supplier.supplierPhoneNumber,
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  onPressed: () =>
+                      launch('tel:${supplier.supplierPhoneNumber}'),
+                  icon: Icon(Icons.call),
+                ),
+              ],
             ),
-            Text(
-              supplier.supplierComment,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-              ),
-            )
+            const Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.gps_fixed),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(supplier.location),
+              ],
+            ),
+            const Divider(),
+            Text(supplier.supplierComment),
           ],
         ),
-      ),
-      trailing: IconButton(
-        onPressed: () => launch('tel:${supplier.supplierPhoneNumber}'),
-        icon: Icon(Icons.call),
       ),
     );
   }

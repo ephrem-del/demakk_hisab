@@ -16,6 +16,10 @@ class SupplierViewModel {
     return supplier.comment;
   }
 
+  String get location {
+    return supplier.location;
+  }
+
   String get id {
     return supplier.id!;
   }

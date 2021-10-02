@@ -16,6 +16,8 @@ class _AddContactPageState extends State<AddContactPage> {
 
   final TextEditingController _commentController = TextEditingController();
 
+  final TextEditingController _locationController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   final AddContactViewModel _addContactViewModel = AddContactViewModel();
@@ -24,8 +26,10 @@ class _AddContactPageState extends State<AddContactPage> {
     final String name = _nameController.text;
     final String phoneNumber = _phoneNumberController.text;
     final String comment = _commentController.text;
+    final String location = _locationController.text;
     if (_formKey.currentState!.validate()) {
-      await _addContactViewModel.addContact(name, phoneNumber, comment);
+      await _addContactViewModel.addContact(
+          name, phoneNumber, comment, location);
       Navigator.pop(context);
     }
   }
@@ -80,10 +84,23 @@ class _AddContactPageState extends State<AddContactPage> {
                       return 'Comment is required';
                     }
                   },
-                  keyboardType: TextInputType.phone,
-                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.name,
+                  textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
                     labelText: 'Comment',
+                  ),
+                ),
+                TextFormField(
+                  controller: _locationController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'location is required';
+                    }
+                  },
+                  keyboardType: TextInputType.name,
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    labelText: 'Location',
                   ),
                 ),
                 SizedBox(
