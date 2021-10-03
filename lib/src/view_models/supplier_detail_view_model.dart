@@ -11,4 +11,8 @@ class SupplierDetailViewModel {
   String get price {
     return supplierDetail.price;
   }
+
+  String get id {
+    return supplierDetail.id;
+  }
 }

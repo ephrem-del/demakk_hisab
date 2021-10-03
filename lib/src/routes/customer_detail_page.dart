@@ -1,3 +1,4 @@
+import 'package:demakk_hisab/src/view_models/authentication_view_model.dart';
 import 'package:demakk_hisab/src/view_models/customer_all_order_view_model.dart';
 import 'package:demakk_hisab/src/view_models/customer_today_orders_view_model.dart';
 import 'package:demakk_hisab/src/view_models/customer_view_model.dart';
@@ -9,28 +10,64 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'add_order_page.dart';
 
-class CustomerDetailPage extends StatelessWidget {
+class CustomerDetailPage extends StatefulWidget {
   final CustomerViewModel customer;
-  const CustomerDetailPage({Key? key, required this.customer})
-      : super(key: key);
+  CustomerDetailPage({Key? key, required this.customer}) : super(key: key);
+
+  @override
+  State<CustomerDetailPage> createState() => _CustomerDetailPageState();
+}
+
+class _CustomerDetailPageState extends State<CustomerDetailPage> {
+  final TextEditingController userNameController = TextEditingController();
+
+  final TextEditingController pinController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  final AuthenticationViewModel _authenticationViewModel =
+      AuthenticationViewModel();
+
+  late final CustomerAllOrderViewModel _customerAllOrderViewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _customerAllOrderViewModel =
+        CustomerAllOrderViewModel(customer: widget.customer);
+  }
+
+  void delete(context) {
+    if (_formKey.currentState!.validate()) {
+      String userName = userNameController.text;
+      String pin = pinController.text;
+      bool authenticated =
+          _authenticationViewModel.authenticate(userName, int.parse(pin));
+      if (authenticated) {
+        Navigator.pop(context);
+        _customerAllOrderViewModel.deleteCustomer();
+        Navigator.pop(context);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final _pages = <Widget>[
-      _TodayBody(customer: customer),
-      _WeeklyBody(customer: customer),
-      _AllBody(customer: customer)
+      _TodayBody(customer: widget.customer),
+      _WeeklyBody(customer: widget.customer),
+      _AllBody(customer: widget.customer)
     ];
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () => launch('tel:${customer.phoneNo}'),
+          onPressed: () => launch('tel:${widget.customer.phoneNo}'),
           child: Icon(Icons.call),
         ),
         appBar: AppBar(
           centerTitle: true,
-          title: Text(customer.customerName),
+          title: Text(widget.customer.customerName),
           bottom: PreferredSize(
             preferredSize: Size(MediaQuery.of(context).size.width, 50),
             child: const TabBar(
@@ -53,11 +90,72 @@ class CustomerDetailPage extends StatelessWidget {
           ),
           actions: [
             IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Form(
+                        key: _formKey,
+                        child: SimpleDialog(
+                          title: Text('Delete Customer'),
+                          children: [
+                            Text(
+                                'Are you sure you want to delete ${widget.customer.customerName} as a customer?'),
+                            TextFormField(
+                              controller: userNameController,
+                              decoration: InputDecoration(
+                                label: Text('Username'),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Username required';
+                                }
+                              },
+                            ),
+                            TextFormField(
+                              controller: pinController,
+                              decoration: InputDecoration(
+                                label: Text('PIN'),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'PIN required';
+                                }
+                              },
+                            ),
+                            ButtonBar(
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    userNameController.clear();
+                                    pinController.clear();
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    delete(context);
+                                  },
+                                  child: Text('Delete'),
+                                )
+                              ],
+                            )
+                          ],
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                        ),
+                      );
+                    });
+              },
+              icon: Icon(Icons.delete),
+            ),
+            IconButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => AddOrderPage(customer: customer),
+                      builder: (_) => AddOrderPage(customer: widget.customer),
                     ),
                   );
                 },

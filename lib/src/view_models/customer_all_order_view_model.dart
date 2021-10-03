@@ -30,4 +30,11 @@ class CustomerAllOrderViewModel {
       allOrdersStream.sink.add(orderViewModels);
     });
   }
+
+  deleteCustomer() async {
+    FirebaseFirestore.instance
+        .collection('customers')
+        .doc(customer.id)
+        .delete();
+  }
 }

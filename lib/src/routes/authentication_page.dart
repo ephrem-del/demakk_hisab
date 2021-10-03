@@ -123,6 +123,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                         child: TextFormField(
                           textAlign: TextAlign.center,
                           controller: _nameController,
+                          textInputAction: TextInputAction.next,
                         ),
                       ),
                     ),
@@ -149,6 +150,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                     child: TextFormField(
                       textAlign: TextAlign.center,
                       controller: _pinController,
+                      textInputAction: TextInputAction.done,
                     ),
                   ),
                 ],

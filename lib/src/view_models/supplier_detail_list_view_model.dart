@@ -34,4 +34,24 @@ class SupplierDetailListViewModel {
       supplierDetailListStream.sink.add(supplierDetailVMs);
     });
   }
+
+  edit(SupplierDetailViewModel supplierDetail, String newPrice) async {
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      final secureSnapshot = await transaction.get(FirebaseFirestore.instance
+          .collection('contacts')
+          .doc(supplier.id)
+          .collection('items')
+          .doc(supplierDetail.id));
+      transaction.update(secureSnapshot.reference, {'price': newPrice});
+    });
+  }
+
+  delete(SupplierDetailViewModel supplierDetail) async {
+    await FirebaseFirestore.instance
+        .collection('contacts')
+        .doc(supplier.id)
+        .collection('items')
+        .doc(supplierDetail.id)
+        .delete();
+  }
 }
