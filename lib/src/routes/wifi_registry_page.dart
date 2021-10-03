@@ -2,6 +2,7 @@ import 'package:demakk_hisab/src/view_models/wifi_customer_view_model.dart';
 import 'package:demakk_hisab/src/view_models/wifi_registry_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:wakelock/wakelock.dart';
 
 class WifiRegistryPage extends StatefulWidget {
   const WifiRegistryPage({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class _WifiRegistryPageState extends State<WifiRegistryPage> {
   void initState() {
     _wifiRegistryViewModel = WifiRegistryViewModel();
     super.initState();
+    Wakelock.enable();
   }
 
   _addCustomer(context) async {

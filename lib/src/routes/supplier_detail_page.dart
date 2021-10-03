@@ -1,3 +1,4 @@
+import 'package:demakk_hisab/src/view_models/authentication_view_model.dart';
 import 'package:demakk_hisab/src/view_models/supplier_detail_list_view_model.dart';
 import 'package:demakk_hisab/src/view_models/supplier_detail_view_model.dart';
 import 'package:demakk_hisab/src/view_models/supplier_view_model.dart';
@@ -20,6 +21,14 @@ class _SupplierDetailPageState extends State<SupplierDetailPage> {
   final TextEditingController newPriceController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  final _formKey2 = GlobalKey<FormState>();
+
+  final TextEditingController userNameController = TextEditingController();
+
+  final TextEditingController pinController = TextEditingController();
+
+  final AuthenticationViewModel _authenticationViewModel =
+      AuthenticationViewModel();
 
   @override
   void initState() {
@@ -29,16 +38,34 @@ class _SupplierDetailPageState extends State<SupplierDetailPage> {
   }
 
   void delete(context, SupplierDetailViewModel supplierDetailViewModel) {
-    _supplierDetailListViewModel.delete(supplierDetailViewModel);
-    Navigator.pop(context);
+    final String userName = userNameController.text;
+    final String pin = pinController.text;
+    if (_formKey2.currentState!.validate()) {
+      bool authenticated =
+          _authenticationViewModel.authenticate(userName, int.parse(pin));
+      if (authenticated) {
+        _supplierDetailListViewModel.delete(supplierDetailViewModel);
+        userNameController.clear();
+        pinController.clear();
+        Navigator.pop(context);
+      }
+    }
   }
 
   void edit(context, SupplierDetailViewModel supplierDetailViewModel) {
     final String newPrice = newPriceController.text;
+    final String userName = userNameController.text;
+    final String pin = pinController.text;
     if (_formKey.currentState!.validate()) {
-      _supplierDetailListViewModel.edit(supplierDetailViewModel, newPrice);
-      newPriceController.clear();
-      Navigator.pop(context);
+      bool authenticated =
+          _authenticationViewModel.authenticate(userName, int.parse(pin));
+      if (authenticated) {
+        _supplierDetailListViewModel.edit(supplierDetailViewModel, newPrice);
+        newPriceController.clear();
+        userNameController.clear();
+        pinController.clear();
+        Navigator.pop(context);
+      }
     }
   }
 
@@ -84,9 +111,11 @@ class _SupplierDetailPageState extends State<SupplierDetailPage> {
             padding: const EdgeInsets.all(15.0),
             child: Column(
               children: [
-                Divider(
-                  thickness: 2,
-                ),
+                _supplierDetails == null || _supplierDetails.length == 0
+                    ? SizedBox.shrink()
+                    : Divider(
+                        thickness: 2,
+                      ),
                 Expanded(
                   child: ListView.builder(
                       itemCount: _supplierDetails!.length,
@@ -95,8 +124,64 @@ class _SupplierDetailPageState extends State<SupplierDetailPage> {
                         return DetailTile(
                             supplierDetail: _supplier,
                             onDelete: () {
-                              delete(context, _supplier);
-                              print('trying to delete');
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Form(
+                                      key: _formKey2,
+                                      child: SimpleDialog(
+                                        title: Text('Delete Item'),
+                                        children: [
+                                          Text(
+                                              'Are you sure you want to delete ${_supplier.item} item'),
+                                          TextFormField(
+                                            controller: userNameController,
+                                            decoration: InputDecoration(
+                                              label: Text('Username'),
+                                            ),
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Username required';
+                                              }
+                                            },
+                                          ),
+                                          TextFormField(
+                                            controller: pinController,
+                                            decoration: InputDecoration(
+                                              label: Text('PIN'),
+                                            ),
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'PIN required';
+                                              }
+                                            },
+                                          ),
+                                          ButtonBar(
+                                            children: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  userNameController.clear();
+                                                  pinController.clear();
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  delete(context, _supplier);
+                                                },
+                                                child: Text('Delete'),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 10),
+                                      ),
+                                    );
+                                  });
                             },
                             onEdit: () {
                               showDialog(
@@ -107,9 +192,6 @@ class _SupplierDetailPageState extends State<SupplierDetailPage> {
                                       child: SimpleDialog(
                                         title: Text('Edit Price'),
                                         children: [
-                                          SizedBox(
-                                            height: 5,
-                                          ),
                                           Text(
                                               'Previous price: ${_supplier.price}'),
                                           TextFormField(
@@ -127,6 +209,30 @@ class _SupplierDetailPageState extends State<SupplierDetailPage> {
                                                   .digitsOnly
                                             ],
                                             controller: newPriceController,
+                                          ),
+                                          TextFormField(
+                                            controller: userNameController,
+                                            decoration: InputDecoration(
+                                              label: Text('Username'),
+                                            ),
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Username required';
+                                              }
+                                            },
+                                          ),
+                                          TextFormField(
+                                            controller: pinController,
+                                            decoration: InputDecoration(
+                                              label: Text('PIN'),
+                                            ),
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'PIN required';
+                                              }
+                                            },
                                           ),
                                           ButtonBar(
                                             children: [
@@ -147,7 +253,7 @@ class _SupplierDetailPageState extends State<SupplierDetailPage> {
                                           )
                                         ],
                                         contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 25),
+                                            horizontal: 25, vertical: 10),
                                       ),
                                     );
                                   });
@@ -200,29 +306,7 @@ class DetailTile extends StatelessWidget {
                       icon: Icon(Icons.edit)),
                   IconButton(
                       onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text('Delete'),
-                                content: Text(
-                                    'Are you sure you want to delete this item from the list?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      onDelete();
-                                    },
-                                    child: Text('Yes'),
-                                  ),
-                                ],
-                              );
-                            });
+                        onDelete();
                       },
                       icon: Icon(Icons.delete)),
                 ],
